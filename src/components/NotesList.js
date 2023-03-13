@@ -3,11 +3,13 @@ import NotesItem from "./NotesItem";
 
 
 
-function NotesList({ notes }) {
+function NotesList({ notes, onDelete }) {
   return (
     <div className="notes-list">
       {notes.map((note) => {
-        return <NotesItem key={note.id} id={note.id} {...note} />;
+        return (
+          <NotesItem key={note.id} id={note.id} onDelete={onDelete} {...note} />
+        );
       })}
     </div>
   );
