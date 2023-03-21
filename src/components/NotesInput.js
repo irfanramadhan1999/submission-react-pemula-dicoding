@@ -17,7 +17,7 @@ class NotesInput extends React.Component {
   }
 
   onTitleChangeEventHandler(event) {
-    this.state(() => {
+    this.setState(() => {
       return {
         title: event.target.value,
       };
@@ -25,7 +25,7 @@ class NotesInput extends React.Component {
   }
 
   onBodyChangeEventHandler(event) {
-    this.state(() => {
+    this.setState(() => {
       return {
         body: event.target.value,
       };
@@ -39,9 +39,19 @@ class NotesInput extends React.Component {
 
   render() {
     return (
-      <form className="form-input">
-        <input type="text" value={this.state.title} onChange={this.onTitleChangeEventHandler} placeholder="Ini adalah judul ..." />
-        <input type="text" value={this.state.body} onChange={this.onBodyChangeEventHandler} placeholder="Tuliskan catatanmu di sini ..." />
+      <form className="form-input" onSubmit={this.onSubmitEventHandler}>
+        <input
+          type="text"
+          value={this.state.title}
+          onChange={this.onTitleChangeEventHandler}
+          placeholder="Ini adalah judul ..."
+        />
+        <input
+          type="text"
+          value={this.state.body}
+          onChange={this.onBodyChangeEventHandler}
+          placeholder="Tuliskan catatanmu di sini ..."
+        />
         <button type="submit"> Buat </button>
       </form>
     );

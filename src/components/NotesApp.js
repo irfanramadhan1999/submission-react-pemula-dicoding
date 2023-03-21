@@ -24,7 +24,7 @@ class NotesApp extends React.Component {
   onAddNotesHandler({title,body}) {
     this.setState((prevState) => {
         return {
-            contacts: [
+            Notes: [
                 ...prevState.notes,
                 {
                     id: +new Date(),
