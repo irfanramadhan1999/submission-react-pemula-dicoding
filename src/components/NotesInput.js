@@ -1,6 +1,5 @@
 import React from "react";
 
-
 class NotesInput extends React.Component {
   constructor(props) {
     super(props);
@@ -34,29 +33,33 @@ class NotesInput extends React.Component {
 
   onSubmitEventHandler(event) {
     event.preventDefault();
-    this.props.addNotes(this.state);
+    this.props.addNotes({ title: this.state.title, body: this.state.body });
   }
 
   render() {
     return (
-      <form className="form-input" onSubmit={this.onSubmitEventHandler}>
-        <input
-          type="text"
-          value={this.state.title}
-          onChange={this.onTitleChangeEventHandler}
-          placeholder="Ini adalah judul ..."
-        />
-        <input
-          type="text"
-          value={this.state.body}
-          onChange={this.onBodyChangeEventHandler}
-          placeholder="Tuliskan catatanmu di sini ..."
-        />
-        <button type="submit"> Buat </button>
-      </form>
+      <div className="note-input">
+        <h2>Buat Catatan</h2>
+        <form className="form-input" onSubmit={this.onSubmitEventHandler}>
+          <input
+            type="text"
+            value={this.state.title}
+            onChange={this.onTitleChangeEventHandler}
+            placeholder="Ini adalah judul ..."
+          />
+
+          <textarea
+            type="text"
+            value={this.state.body}
+            onChange={this.onBodyChangeEventHandler}
+            class="note-input__body"
+            placeholder="Tuliskan catatanmu di sini ..."
+          />
+          <button type="submit"> Buat </button>
+        </form>
+      </div>
     );
   }
 }
-
 
 export default NotesInput;

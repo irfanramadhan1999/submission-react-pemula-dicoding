@@ -4,7 +4,6 @@ import NotesHeader from "./NotesHeader";
 import { getInitialData } from "../utils/data";
 import NotesInput from "./NotesInput";
 
-
 class NotesApp extends React.Component {
   constructor(props) {
     super(props);
@@ -14,6 +13,7 @@ class NotesApp extends React.Component {
 
     this.onDeleteHandler = this.onDeleteHandler.bind(this);
     this.onAddNotesHandler = this.onAddNotesHandler.bind(this);
+    this.onArchiveHandler = this.onArchiveHandler.bind(this);
   }
 
   onDeleteHandler(id) {
@@ -21,18 +21,32 @@ class NotesApp extends React.Component {
     this.setState({ notes });
   }
 
-  onAddNotesHandler({title,body}) {
-    this.setState((prevState) => {
+  onArchiveHandler(id) {
+    const notes = this.state.notes.map((note) => {
+      if (note.id === id) {
         return {
-            Notes: [
-                ...prevState.notes,
-                {
-                    id: +new Date(),
-                    title,
-                    body,
-                }
-            ]
-        }
+          ...note,
+          onArchive: true,
+        };
+      } else {
+        return note;
+      }
+    });
+    this.setState({ notes });
+  }
+
+  onAddNotesHandler({ title, body }) {
+    this.setState((prevState) => {
+      return {
+        notes: [
+          ...prevState.notes,
+          {
+            id: +new Date(),
+            title,
+            body,
+          },
+        ],
+      };
     });
   }
 
@@ -40,14 +54,20 @@ class NotesApp extends React.Component {
     return (
       <div className="notes-app">
         <NotesHeader />
-        <h2>Buat Catatan</h2>
-        <NotesInput AddNotes={this.onAddNotesHandler} />
-        <h1>Catatan Aktif</h1>
-        <NotesList notes={this.state.notes} onDelete={this.onDeleteHandler} />
+        <div className="note-app__body">
+          <NotesInput addNotes={this.onAddNotesHandler} />
+          <h2>Catatan Aktif</h2>
+          <NotesList notes={this.state.notes} onDelete={this.onDeleteHandler} />
+          <h2>Arsip</h2>
+          <NotesList
+            notes={this.state.notes}
+            onDelete={this.onDeleteHandler}
+            onArchive={this.onArchiveHandler}
+          />
+        </div>
       </div>
     );
   }
 }
-
 
 export default NotesApp;
